@@ -72,7 +72,7 @@ print('Y train:', Y_train.shape)
 print('X train:', X_train.shape)
 print('Y val:', Y_val.shape)
 print('X val:', X_val.shape)
-# 5. Định nghĩa model
+# Định nghĩa model
 model = Sequential()
 
 # Thêm Convolutional layer với 32 kernel, kích thước kernel 3*3
@@ -99,7 +99,19 @@ model.compile(loss='categorical_crossentropy',
 H = model.fit(X_train, Y_train, validation_data=(X_val, Y_val),
               batch_size=74, epochs=10, verbose=1)
 # 8. Vẽ đồ thị loss, accuracy của traning set và validation set
+
 fig = plt.figure()
 numOfEpoch = 10
-
-model.save('model.ckpt')
+print(H.history)
+plt.plot(np.arange(0, numOfEpoch), H.history['loss'], label='training loss')
+plt.plot(np.arange(0, numOfEpoch),
+         H.history['val_loss'], label='validation loss')
+plt.plot(np.arange(0, numOfEpoch), H.history['accuracy'], label='accuracy')
+plt.plot(np.arange(0, numOfEpoch),
+         H.history['val_accuracy'], label='validation accuracy')
+plt.title('Accuracy and Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss|Accuracy')
+plt.legend()
+plt.show()
+# model.save('model.ckpt')
